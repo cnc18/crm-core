@@ -1,0 +1,17 @@
+# === API ===
+fastapi
+uvicorn[standard]
+
+# === Base de datos ===
+sqlalchemy
+alembic
+psycopg[binary]
+
+# === Configuracion / validacion ===
+pydantic
+pydantic-settings
+python-dotenv
+
+# === Tests ===
+pytest
+httpx

@@ -1,0 +1,1 @@
+"""Esquemas Pydantic de disponibilidad de stock.""" 
