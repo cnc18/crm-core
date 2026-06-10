@@ -15,3 +15,4 @@ class MateriaPrima(IDTimestampMixin, Base):
     tipo: Mapped[str] = mapped_column(String(20))  # esencia / alcohol / frasco
     stock_actual: Mapped[Decimal] = mapped_column(Numeric(10, 2))
     unidad: Mapped[str] = mapped_column(String(20))  # ml / unidad
+    activo: Mapped[bool] = mapped_column(default=True)  # inactiva = borrado suave

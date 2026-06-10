@@ -2,6 +2,7 @@
 
 from sqlalchemy.orm import Session
 
+from app.errors import NotFoundError
 from app.models.cliente import Cliente
 from app.repositories.cliente_repo import ClienteRepository
 
@@ -19,7 +20,7 @@ def cambiar_estado_lead(telefono: str, nuevo_estado: str, db: Session) -> Client
     repo = ClienteRepository(db)
     cliente = repo.get_by_telefono(telefono)
     if cliente is None:
-        raise ValueError(f"No existe un cliente con telefono {telefono}")
+        raise NotFoundError(f"No existe un cliente con telefono {telefono}")
 
     cliente.estado_lead = nuevo_estado
     db.commit()

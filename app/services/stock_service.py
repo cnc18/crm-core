@@ -44,7 +44,12 @@ def calcular_unidades_disponibles(producto_id: int, db: Session) -> dict:
     # Caso C: calculo normal. Por cada insumo, cuantas unidades permite su stock.
     capacidades = []
     for insumo in receta.insumos:
-        stock = insumo.materia_prima.stock_actual
+        materia = insumo.materia_prima
+        # Materia dada de baja (activo=False): se trata como no disponible -> limita a 0.
+        if not materia.activo:
+            capacidades.append(0)
+            continue
+        stock = materia.stock_actual
         necesita = insumo.cantidad
         if necesita <= 0:  # receta mal definida: evita division por cero, ignora ese insumo
             continue

@@ -4,11 +4,13 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
 
+from app.api.schemas.validators import TextoObligatorio
+
 
 class ClienteCreate(BaseModel):
     """Datos de ENTRADA: lo que el cliente de la API envia para registrar un lead."""
 
-    telefono: str
+    telefono: TextoObligatorio
     nombre: str | None = None
     canal_origen: str = "whatsapp"
 

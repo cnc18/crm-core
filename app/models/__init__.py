@@ -7,6 +7,7 @@ Asi, al importar `app.models`, todas las tablas quedan registradas en `Base.meta
 from app.models.base import Base
 from app.models.cliente import Cliente
 from app.models.materia_prima import MateriaPrima
+from app.models.oferta import Oferta
 from app.models.producto import Producto
 from app.models.receta import Receta, RecetaInsumo
 
@@ -14,6 +15,7 @@ __all__ = [
     "Base",
     "Cliente",
     "MateriaPrima",
+    "Oferta",
     "Producto",
     "Receta",
     "RecetaInsumo",
