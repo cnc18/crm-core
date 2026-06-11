@@ -1,10 +1,14 @@
 """Esquemas Pydantic de cliente (entrada/salida de la API)."""
 
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
 from app.api.schemas.validators import TextoObligatorio
+
+# Estados validos de un lead en el pipeline.
+EstadoLead = Literal["nuevo", "interesado", "cliente"]
 
 
 class ClienteCreate(BaseModel):
@@ -13,6 +17,18 @@ class ClienteCreate(BaseModel):
     telefono: TextoObligatorio
     nombre: str | None = None
     canal_origen: str = "whatsapp"
+
+
+class ClienteUpdate(BaseModel):
+    """Datos de ENTRADA para actualizar un cliente: todos los campos opcionales.
+
+    Solo se aplican los campos enviados (exclude_unset en el router), asi que un
+    PUT con solo estado_lead no borra el nombre.
+    """
+
+    nombre: str | None = None
+    estado_lead: EstadoLead | None = None
+    canal_origen: str | None = None
 
 
 class ClienteOut(BaseModel):

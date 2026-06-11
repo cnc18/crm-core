@@ -8,6 +8,7 @@ from app.models.base import Base
 from app.models.cliente import Cliente
 from app.models.materia_prima import MateriaPrima
 from app.models.oferta import Oferta
+from app.models.pedido import Pedido, PedidoItem
 from app.models.producto import Producto
 from app.models.receta import Receta, RecetaInsumo
 
@@ -16,6 +17,8 @@ __all__ = [
     "Cliente",
     "MateriaPrima",
     "Oferta",
+    "Pedido",
+    "PedidoItem",
     "Producto",
     "Receta",
     "RecetaInsumo",

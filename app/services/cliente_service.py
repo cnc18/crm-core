@@ -26,3 +26,20 @@ def cambiar_estado_lead(telefono: str, nuevo_estado: str, db: Session) -> Client
     db.commit()
     db.refresh(cliente)  # recarga el cliente con el cambio ya guardado
     return cliente
+
+
+def actualizar_cliente(telefono: str, db: Session, cambios: dict) -> Cliente:
+    """Actualiza los campos provistos de un cliente (nombre, estado_lead, canal_origen).
+
+    Solo toca las claves presentes en `cambios`; el resto queda igual.
+    """
+    repo = ClienteRepository(db)
+    cliente = repo.get_by_telefono(telefono)
+    if cliente is None:
+        raise NotFoundError(f"No existe un cliente con telefono {telefono}")
+
+    for campo, valor in cambios.items():
+        setattr(cliente, campo, valor)
+    db.commit()
+    db.refresh(cliente)
+    return cliente

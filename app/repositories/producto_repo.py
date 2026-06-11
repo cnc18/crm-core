@@ -1,9 +1,12 @@
 """Acceso a datos de productos (hereda el CRUD generico de BaseRepository)."""
 
+from decimal import Decimal
+
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, joinedload
 
 from app.models.producto import Producto
+from app.models.receta import Receta
 from app.repositories.base_repo import BaseRepository
 
 
@@ -12,6 +15,21 @@ class ProductoRepository(BaseRepository[Producto]):
 
     def __init__(self, db: Session):
         super().__init__(Producto, db)
+
+    def crear_con_receta_vacia(
+        self, nombre: str, precio: Decimal, receta_nombre: str, rinde_unidades: int = 1
+    ) -> Producto:
+        """Crea el producto y su receta vacia (sin insumos) en UNA transaccion.
+
+        Asignar producto.receta encadena el guardado: el commit persiste ambos o
+        ninguno (la relacion completa el receta_id automaticamente).
+        """
+        receta = Receta(nombre=receta_nombre, rinde_unidades=rinde_unidades)
+        producto = Producto(nombre=nombre, precio=precio, receta=receta)
+        self.db.add(producto)
+        self.db.commit()
+        self.db.refresh(producto)
+        return producto
 
     def actualizar(self, producto: Producto, **cambios) -> Producto:
         """Aplica solo los campos presentes en 'cambios' al producto y guarda."""

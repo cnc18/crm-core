@@ -17,5 +17,6 @@ class Producto(IDTimestampMixin, Base):
     activo: Mapped[bool] = mapped_column(default=True)  # productos inactivos no se venden
 
     # Cada producto se fabrica segun una receta (Producto N---1 Receta).
-    receta_id: Mapped[int] = mapped_column(ForeignKey("recetas.id"))
-    receta: Mapped["Receta"] = relationship()
+    # Nullable como respaldo: permite un producto sin receta a nivel base.
+    receta_id: Mapped[int | None] = mapped_column(ForeignKey("recetas.id"), nullable=True)
+    receta: Mapped["Receta | None"] = relationship()

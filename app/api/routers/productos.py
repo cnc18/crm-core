@@ -21,10 +21,8 @@ router = APIRouter(prefix="/productos", tags=["productos"])
 
 @router.post("", response_model=ProductoSalida)
 def agregar(datos: ProductoCrear, db: Session = Depends(get_db)):
-    """Agrega un producto nuevo (la receta indicada debe existir)."""
-    return crear_producto(
-        db, nombre=datos.nombre, precio=datos.precio, receta_id=datos.receta_id
-    )
+    """Agrega un producto nuevo; se le crea una receta vacia automaticamente."""
+    return crear_producto(db, nombre=datos.nombre, precio=datos.precio)
 
 
 @router.get("", response_model=list[ProductoSalida])

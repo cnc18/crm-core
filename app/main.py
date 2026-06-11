@@ -3,7 +3,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routers import clientes, materias_primas, ofertas, productos, recetas
+from app.api.routers import (
+    clientes,
+    estadisticas,
+    materias_primas,
+    ofertas,
+    pedidos,
+    productos,
+    recetas,
+)
 from app.errors import registrar_manejadores
 
 app = FastAPI(title="crm-core")
@@ -35,6 +43,8 @@ app.include_router(clientes.router)
 app.include_router(ofertas.router)
 app.include_router(materias_primas.router)
 app.include_router(recetas.router)
+app.include_router(estadisticas.router)
+app.include_router(pedidos.router)
 
 
 @app.get("/")

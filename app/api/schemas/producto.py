@@ -9,11 +9,13 @@ from app.api.schemas.validators import TextoObligatorio
 
 
 class ProductoCrear(BaseModel):
-    """Datos de ENTRADA para crear un producto."""
+    """Datos de ENTRADA para crear un producto.
+
+    Solo nombre y precio: la receta (vacia) se crea automaticamente y se asocia.
+    """
 
     nombre: TextoObligatorio
     precio: Decimal = Field(gt=0)  # el precio debe ser mayor a 0
-    receta_id: int  # obligatoria: todo producto se fabrica segun una receta
 
 
 class ProductoEditar(BaseModel):
@@ -34,5 +36,5 @@ class ProductoSalida(BaseModel):
     nombre: str
     precio: Decimal
     activo: bool
-    receta_id: int
+    receta_id: int | None  # nullable como respaldo; normalmente siempre tiene receta
     created_at: datetime
